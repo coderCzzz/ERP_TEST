@@ -7,4 +7,11 @@
   </parent>
   <artifactId>erp_web</artifactId>
   <packaging>war</packaging>
+  <dependencies>
+  	<dependency>
+  		<groupId>cn.itcast.erp</groupId>
+  		<artifactId>erp_biz</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
 </project>

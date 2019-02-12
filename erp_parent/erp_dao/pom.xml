@@ -7,4 +7,11 @@
   </parent>
   <groupId>cn.itcast.erp</groupId>
   <artifactId>erp_dao</artifactId>
+  <dependencies>
+  	<dependency>
+  		<groupId>cn.itcast.erp</groupId>
+  		<artifactId>erp_entity</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
 </project>
