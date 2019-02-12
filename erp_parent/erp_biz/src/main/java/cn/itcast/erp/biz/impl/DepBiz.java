@@ -20,9 +20,13 @@ public List<Dep> getList() {
 /**
  * Ìõ¼ş²éÑ¯
  */
-public List<Dep> getList(Dep dep1) {
+public List<Dep> getList(Dep dep1,int firstResult,int maxResults) {
 	
-	return depDao.getList(dep1);
+	return depDao.getList(dep1,firstResult,maxResults);
+}
+
+public long getCount(Dep dep1) {
+	return depDao.getCount(dep1);
 }
 
 }
