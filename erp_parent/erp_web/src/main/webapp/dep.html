@@ -11,8 +11,9 @@
 <script type="text/javascript" src="ui/jquery.serializejson.min.js"></script>
 <script type="text/javascript">
 	$(function(){
+		//表格初始化
 		$('#grid').datagrid({
-			url:'dep_list.action',
+			url:'dep_getList',
 			columns:[[
 			   {field:'uuid',title:'部门编号',width:100},
 			   {field:'name',title:'部门名称',width:100},
@@ -20,17 +21,29 @@
 			         ]],
 			   singleSelect:true
 		});
+		//条件查询
+		$('#btnSearch').bind('click',function(){
+			var formdata=$('#searchForm').serializeJSON();
+			$('#grid').datagrid('load',formdata);
+		});
 	});
 </script>
 </head>
 <body>
+<div class="easyui-panel" style="padding-left:4px;border-bottom:0px;"></div>
+<div style="height:2px;"></div>
 <form id="searchForm">
 	<table>
 		<tr>
-			<td>部门名称：</td><td><input name="dep1.name"></td>
-			<td>部门电话：</td><td><input name="dep1.tele"></td>
+			<td>部门名称：</td>
+			<td><input name="dep1.name"></td>
+		</tr>
+		<tr>
+			<td>部门电话：</td>
+			<td><input name="dep1.tele"></td>
 		</tr>
 	</table>
+	<button id="btnSearch" type="button">查询</button>
 </form>
 <table id="grid"></table>
 </body>

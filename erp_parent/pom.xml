@@ -148,6 +148,7 @@
     			<configuration>
     				<port>8080</port>
     				<path>/erp</path>
+    				<uriEncoding>utf-8</uriEncoding>
     			</configuration>
     		</plugin>
     	</plugins>

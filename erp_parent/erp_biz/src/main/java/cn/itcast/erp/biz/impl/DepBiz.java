@@ -17,5 +17,12 @@ public void setDepDao(IDepDao depDao) {
 public List<Dep> getList() {
 	return depDao.getList();
 }
+/**
+ * Ìõ¼ş²éÑ¯
+ */
+public List<Dep> getList(Dep dep1) {
+	
+	return depDao.getList(dep1);
+}
 
 }

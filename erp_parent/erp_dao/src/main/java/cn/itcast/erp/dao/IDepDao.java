@@ -3,4 +3,5 @@ import java.util.List;
 import cn.itcast.erp.entity.Dep;
 public interface IDepDao {
 List<Dep> getList();
+List<Dep> getList(Dep dep1);
 }
