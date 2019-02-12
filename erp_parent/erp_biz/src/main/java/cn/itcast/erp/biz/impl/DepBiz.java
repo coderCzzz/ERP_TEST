@@ -20,13 +20,17 @@ public List<Dep> getList() {
 /**
  * Ìõ¼ş²éÑ¯
  */
-public List<Dep> getList(Dep dep1,int firstResult,int maxResults) {
+public List<Dep> getList(Dep dep1,Dep dep2,Object param,int firstResult,int maxResults) {
 	
-	return depDao.getList(dep1,firstResult,maxResults);
+	return depDao.getList(dep1,dep2,param,firstResult,maxResults);
 }
 
-public long getCount(Dep dep1) {
-	return depDao.getCount(dep1);
+public long getCount(Dep dep1,Dep dep2,Object param) {
+	return depDao.getCount(dep1,dep2,param);
+}
+
+public void add(Dep dep) {
+	depDao.add(dep);
 }
 
 }

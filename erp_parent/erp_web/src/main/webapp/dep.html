@@ -20,13 +20,46 @@
 			   {field:'tele',title:'部门电话',width:100},
 			         ]],
 			   singleSelect:true,
-			   pagination:true 
+			   pagination:true,
+			   toolbar: [{
+					text:'新增',
+					iconCls: 'icon-add',
+					handler: function(){
+						$('#editDlg').dialog('open');
+						}
+			   }]
 		});
 		//条件查询
 		$('#btnSearch').bind('click',function(){
 			var formdata=$('#searchForm').serializeJSON();
 			$('#grid').datagrid('load',formdata);
 		});
+		$('#editDlg').dialog({    
+		    title: '部门编辑',    
+		    width: 400,    
+		    height: 200,    
+		    closed: true,       
+		    modal: true   
+		});
+		//保存
+		$('#btnSave').bind('click',function(){
+			var formdata=$('#editForm').serializeJSON();
+			$.ajax({
+				url:'dep_add',
+				data:formdata,
+				datatype:'json',
+				type:'post',
+				success:function(rtn){
+					$.messager.alert("提示",rtn.message,'info',function(){
+						//成功的话关闭窗口
+						$('#editDlg').dialog('close');
+						//刷新表单数据
+						$('#grid').datagrid('reload');
+					});
+				}
+			})
+		})
+
 	});
 </script>
 </head>
@@ -47,5 +80,20 @@
 	<button id="btnSearch" type="button">查询</button>
 </form>
 <table id="grid"></table>
+<div id="editDlg">
+	<form id="editForm">
+	<table>
+		<tr>
+			<td>部门名称：</td>
+			<td><input name="dep.name"></td>
+		</tr>
+		<tr>
+			<td>部门电话：</td>
+			<td><input name="dep.tele"></td>
+		</tr>
+	</table>
+	<button id="btnSave" type="button">保存</button>
+</form>
+</div>
 </body>
 </html>
