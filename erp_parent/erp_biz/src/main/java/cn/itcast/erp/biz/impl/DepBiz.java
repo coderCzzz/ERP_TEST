@@ -32,5 +32,10 @@ public long getCount(Dep dep1,Dep dep2,Object param) {
 public void add(Dep dep) {
 	depDao.add(dep);
 }
+//и╬ЁЩ╡©це
+public void delete(Long uuid) {
+	// TODO Auto-generated method stub
+	depDao.delete(uuid);
+}
 
 }

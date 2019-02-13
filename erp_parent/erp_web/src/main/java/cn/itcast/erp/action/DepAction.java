@@ -64,6 +64,14 @@ public Dep getDep() {
 public void setDep(Dep dep) {
 	this.dep = dep;
 }
+//部门id
+private long id;
+public long getId() {
+	return id;
+}
+public void setId(long id) {
+	this.id = id;
+}
 //列表初始化
 public void list(){
 	List<Dep> list=depBiz.getList();
@@ -82,18 +90,14 @@ public void getList(){
 	this.Write(jsonString);
 }
 public void add(){
-	Map<String, Object> rtn=new HashMap<String, Object>();
 	try {
 		depBiz.add(dep);
-		rtn.put("success", true);
-		rtn.put("message", "添加成功");
+		this.ajaxReturn(true, "添加成功");
 	} catch (Exception e) {
 		// TODO: handle exception
-		rtn.put("success", false);
-		rtn.put("message", "添加失败");
+		this.ajaxReturn(false, "添加失败");
 	}
-	this.Write(JSON.toJSONString(rtn));
-
+	
 }
 public void Write(String jsonString){
 	HttpServletResponse response = ServletActionContext.getResponse();
@@ -103,5 +107,22 @@ public void Write(String jsonString){
 	} catch (Exception e) {
 		// TODO: handle exception
 	}	
+}
+//返回信息封装
+public void ajaxReturn(boolean success,String message){
+	Map<String, Object> rtn=new HashMap<String, Object>();
+	rtn.put("success", success);
+	rtn.put("message", message);
+	this.Write(JSON.toJSONString(rtn));
+}
+//删除部门
+public void delete(){
+	try {
+		depBiz.delete(id);
+		this.ajaxReturn(true, "删除成功");
+	} catch (Exception e) {
+		// TODO: handle exception
+		this.ajaxReturn(false, "删除失败");
+	}
 }
 }

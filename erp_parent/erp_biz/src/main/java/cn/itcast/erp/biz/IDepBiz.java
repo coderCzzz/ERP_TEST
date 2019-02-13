@@ -11,4 +11,5 @@ List<Dep> getList();
 List<Dep> getList(Dep dep1,Dep dep2,Object param,int firstResult,int maxResults);
 long getCount(Dep dep1,Dep dep2,Object param);
 void add(Dep dep);
+void delete(Long uuid);
 }

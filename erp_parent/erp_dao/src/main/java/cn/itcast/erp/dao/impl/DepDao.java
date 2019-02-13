@@ -48,5 +48,12 @@ public class DepDao extends HibernateDaoSupport implements IDepDao {
 	public void add(Dep dep) {
 		this.getHibernateTemplate().save(dep);
 	}
+	/**
+	 * É¾³ý²¿ÃÅ
+	 */
+	public void delete(Long uuid) {
+		Dep dep = this.getHibernateTemplate().get(Dep.class, uuid);
+		this.getHibernateTemplate().delete(dep);
+	}
 
 }
