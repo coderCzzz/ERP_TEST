@@ -38,4 +38,12 @@ public void delete(Long uuid) {
 	depDao.delete(uuid);
 }
 
+public Dep get(Long uuid) {	
+	return depDao.get(uuid);
+}
+
+public void update(Dep dep) {
+	depDao.update(dep);
+}
+
 }

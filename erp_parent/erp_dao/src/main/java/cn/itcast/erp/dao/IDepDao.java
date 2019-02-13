@@ -11,4 +11,8 @@ long getCount(Dep dep1,Dep dep2,Object param);
 void add(Dep dep);
 //删除部门
 void delete(Long uuid);
+//获取单列部门信息
+Dep get(Long uuid);
+//修改部门
+void update(Dep dep);
 }

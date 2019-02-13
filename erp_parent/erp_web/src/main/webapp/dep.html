@@ -10,6 +10,7 @@
 <script type="text/javascript" src="ui/locale/easyui-lang-zh_CN.js"></script>
 <script type="text/javascript" src="ui/jquery.serializejson.min.js"></script>
 <script type="text/javascript">
+	var method='';
 	$(function(){
 		//表格初始化
 		$('#grid').datagrid({
@@ -19,7 +20,9 @@
 			   {field:'name',title:'部门名称',width:100},
 			   {field:'tele',title:'部门电话',width:100,align:'rigth'},
 			   {field:'-',title:'操作',formatter:function(value,row,index){
-				   return '<a href="javascript:void(0)" onclick="del(' + row.uuid + ')">删除</a>';
+				   var oper='<a href="javascript:void(0)" onclick="edit(' + row.uuid + ')">修改</a>';
+				   oper+=' <a href="javascript:void(0)" onclick="del(' + row.uuid + ')">删除</a>';
+				   return oper;
 			   }},
 			         ]],
 			   singleSelect:true,
@@ -28,6 +31,7 @@
 					text:'新增',
 					iconCls: 'icon-add',
 					handler: function(){
+						method="add";
 						$('#editDlg').dialog('open');
 						}
 			   }]
@@ -48,7 +52,7 @@
 		$('#btnSave').bind('click',function(){
 			var formdata=$('#editForm').serializeJSON();
 			$.ajax({
-				url:'dep_add',
+				url:'dep_'+method,
 				data:formdata,
 				datatype:'json',
 				type:'post',
@@ -80,7 +84,14 @@
 				});
 			}
 		});
-	}	
+	}
+	/* 修改部门  */
+	function edit(uuid){
+		method="update";
+		$('#editDlg').dialog('open');
+		$('#editForm').form('clear');
+		$('#editForm').form('load','dep_get?id='+uuid);
+	}
 </script>
 </head>
 <body>
@@ -105,7 +116,7 @@
 	<table>
 		<tr>
 			<td>部门名称：</td>
-			<td><input name="dep.name"></td>
+			<td><input name="dep.name"><input name="dep.uuid" type="hidden"></td>
 		</tr>
 		<tr>
 			<td>部门电话：</td>

@@ -55,5 +55,16 @@ public class DepDao extends HibernateDaoSupport implements IDepDao {
 		Dep dep = this.getHibernateTemplate().get(Dep.class, uuid);
 		this.getHibernateTemplate().delete(dep);
 	}
+	/**
+	 * 获取单列部门信息
+	 */
+	public Dep get(Long uuid) {
+		return getHibernateTemplate().get(Dep.class, uuid);
+	}
+	//修改部门
+	public void update(Dep dep) {
+		// TODO Auto-generated method stub
+		this.getHibernateTemplate().update(dep);
+	}
 
 }

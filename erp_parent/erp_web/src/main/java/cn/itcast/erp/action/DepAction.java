@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 
 import cn.itcast.erp.biz.IDepBiz;
 import cn.itcast.erp.entity.Dep;
@@ -124,5 +125,33 @@ public void delete(){
 		// TODO: handle exception
 		this.ajaxReturn(false, "删除失败");
 	}
+}
+//获取单列部门信息
+public void get(){
+	Dep dep = depBiz.get(id);
+	String jsonString = JSON.toJSONString(dep);
+	String afterJsonString = mapData(jsonString, "dep");
+	this.Write(afterJsonString);
+	
+}
+//给jsonString加前缀
+public String mapData(String jsonString,String prefix){
+	Map<String,Object> map = JSON.parseObject(jsonString);
+	Map<String,Object> dataMap=new HashMap<String, Object>();
+	for(String key:map.keySet()){
+		dataMap.put(prefix+"."+key, map.get(key));
+	}
+	return JSON.toJSONString(dataMap);
+}
+//修改部门
+public void update(){
+	try {
+		depBiz.update(dep);
+		ajaxReturn(true, "修改成功");
+	} catch (Exception e) {
+		// TODO: handle exception
+		ajaxReturn(false, "修改失败");
+	}
+	
 }
 }
