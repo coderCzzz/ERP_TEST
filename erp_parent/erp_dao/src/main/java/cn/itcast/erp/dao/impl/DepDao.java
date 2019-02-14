@@ -11,60 +11,21 @@ import org.springframework.orm.hibernate5.support.HibernateDaoSupport;
 import cn.itcast.erp.dao.IDepDao;
 import cn.itcast.erp.entity.Dep;
 
-public class DepDao extends HibernateDaoSupport implements IDepDao {
-
-	public List<Dep> getList() {
-		return (List<Dep>)  getHibernateTemplate().find("from Dep");
-	}
-	/**
-	 * 条件过滤
-	 */
-	public List<Dep> getList(Dep dep1,Dep dep2,Object param,int firstResult,int maxResults) {
-		DetachedCriteria dc = this.getDetachedCriteria(dep1);
-		List<Dep> list = (List<Dep>) this.getHibernateTemplate().findByCriteria(dc,firstResult,maxResults);
-		return list;
-	}
-	public long getCount(Dep dep1,Dep dep2,Object param) {
-		DetachedCriteria dc = this.getDetachedCriteria(dep1);
-		dc.setProjection(Projections.rowCount());
-		return (Long) this.getHibernateTemplate().findByCriteria(dc).get(0);
-	}
-	//封装离线QBC
-	private DetachedCriteria getDetachedCriteria(Dep dep1){
+public class DepDao extends BaseDao<Dep> implements IDepDao {
+	@Override
+	public DetachedCriteria getDetachedCriteria(Dep dep1) {
+		// TODO Auto-generated method stub
 		DetachedCriteria dc=DetachedCriteria.forClass(Dep.class);
-		if(dep1!=null){
-			if(dep1.getName()!=null&&dep1.getName().trim().length()>0){
-				dc.add(Restrictions.ilike("name", dep1.getName(), MatchMode.ANYWHERE));
+		if(null != dep1){
+			//是否输入部门名称
+			if(null != dep1.getName() && dep1.getName().trim().length() > 0){
+				dc.add(Restrictions.like("name", dep1.getName(), MatchMode.ANYWHERE));
 			}
-			if(dep1.getTele()!=null&&dep1.getTele().trim().length()>0){
-				dc.add(Restrictions.ilike("tele", dep1.getTele(), MatchMode.ANYWHERE));
+			//是否输入部门的电话
+			if(null != dep1.getTele() && dep1.getTele().trim().length() > 0){
+				dc.add(Restrictions.like("tele", dep1.getTele(), MatchMode.ANYWHERE));
 			}
 		}
 		return dc;
-	}
-	/**
-	 * 新增部门
-	 */
-	public void add(Dep dep) {
-		this.getHibernateTemplate().save(dep);
-	}
-	/**
-	 * 删除部门
-	 */
-	public void delete(Long uuid) {
-		Dep dep = this.getHibernateTemplate().get(Dep.class, uuid);
-		this.getHibernateTemplate().delete(dep);
-	}
-	/**
-	 * 获取单列部门信息
-	 */
-	public Dep get(Long uuid) {
-		return getHibernateTemplate().get(Dep.class, uuid);
-	}
-	//修改部门
-	public void update(Dep dep) {
-		// TODO Auto-generated method stub
-		this.getHibernateTemplate().update(dep);
-	}
-
+	}	
 }
