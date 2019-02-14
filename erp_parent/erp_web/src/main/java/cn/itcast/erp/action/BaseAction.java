@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 
 import cn.itcast.erp.biz.IBaseBiz;
 
@@ -43,7 +44,7 @@ public class BaseAction<T> {
 	public void setT2(T t2) {
 		this.t2 = t2;
 	}
-	
+
 	private Object param;
 		
 	public Object getParam() {
@@ -84,12 +85,12 @@ public class BaseAction<T> {
 	 */
 	public void listByPage(){		
 		int firstResult=(page-1)*rows;
-		List<T> list = baseBiz.getListByPage(t1, t2, param, firstResult, rows);
+		List<T> list = baseBiz.getListByPage(t1,t2, param, firstResult, rows);
 		long count = baseBiz.getCount(t1, t2, param);		
 			Map<String, Object> map=new HashMap<String, Object>();
 		map.put("rows", list);
 		map.put("total", count);		
-		String jsonString = JSON.toJSONString(map);	
+		String jsonString = JSON.toJSONString(map,SerializerFeature.DisableCircularReferenceDetect);	
 		write(jsonString);
 	}
 	

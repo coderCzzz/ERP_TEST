@@ -6,7 +6,6 @@
         <id name="uuid" >
         	<generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"><param name="sequence">emp_seq</param></generator>
         </id>
-
         <property name="username" /> 
         <property name="pwd" /> 
         <property name="name" /> 
@@ -15,7 +14,6 @@
         <property name="tele" /> 
         <property name="address" /> 
         <property name="birthday" /> 
-        <property name="depuuid" /> 
- 
+        <many-to-one name="dep" class="cn.itcast.erp.entity.Dep" column="depuuid"></many-to-one>
     </class>
 </hibernate-mapping>

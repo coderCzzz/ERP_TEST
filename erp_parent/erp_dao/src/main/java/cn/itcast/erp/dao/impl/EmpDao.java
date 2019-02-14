@@ -42,12 +42,24 @@ public class EmpDao extends BaseDao<Emp> implements IEmpDao {
 			{
 				dc.add(Restrictions.like("tele", emp1.getTele(), MatchMode.ANYWHERE));			
 			}
+			if(emp1.getGender()!=null)
+			{
+				dc.add(Restrictions.eq("gender", emp1.getGender()));			
+			}
 			if(emp1.getAddress()!=null &&  emp1.getAddress().trim().length()>0)
 			{
 				dc.add(Restrictions.like("address", emp1.getAddress(), MatchMode.ANYWHERE));			
 			}
-		
-		}		
+			if(emp1.getDep()!=null&&emp1.getDep().getUuid()!=null){
+				dc.add(Restrictions.eq("dep", emp1.getDep()));
+			}
+			if(null!=emp1.getBirthday()){
+				dc.add(Restrictions.ge("birthday", emp1.getBirthday()));
+			}
+		}
+		if(null!=emp2.getBirthday()){
+			dc.add(Restrictions.le("birthday", emp2.getBirthday()));
+		}
 		return dc;
 	}
 	

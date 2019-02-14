@@ -28,8 +28,11 @@ $(function(){
 	
 	//保存
 	$('#btnSave').bind('click',function(){
+		var isValid=$('#editForm').form('validate');
+		if(isValid==false){
+			return;
+		}
 		var formdata= $('#editForm').serializeJSON();	
-		
 		$.ajax({
 			url:name+'_'+method+'.action',
 			data:formdata,

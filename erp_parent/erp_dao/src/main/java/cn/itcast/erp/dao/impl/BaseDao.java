@@ -42,8 +42,7 @@ public class BaseDao<T> extends HibernateDaoSupport implements IBaseDao<T>{
 	 * @param t1
 	 * @return
 	 */
-	public List<T> getListByPage(T t1,T t2,Object param,int firstResult,int maxResults){
-				
+	public List<T> getListByPage(T t1,T t2,Object param,int firstResult,int maxResults){				
 		DetachedCriteria dc = getDetachedCriteria(t1, t2, param);		
 		return (List<T>) getHibernateTemplate().findByCriteria(dc, firstResult, maxResults);
 	}
