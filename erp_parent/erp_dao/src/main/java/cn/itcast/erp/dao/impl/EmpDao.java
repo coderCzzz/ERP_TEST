@@ -57,9 +57,11 @@ public class EmpDao extends BaseDao<Emp> implements IEmpDao {
 				dc.add(Restrictions.ge("birthday", emp1.getBirthday()));
 			}
 		}
-		if(null!=emp2.getBirthday()){
-			dc.add(Restrictions.le("birthday", emp2.getBirthday()));
-		}
+		if(null!=emp2){
+			if(null!=emp2.getBirthday()){
+				dc.add(Restrictions.le("birthday", emp2.getBirthday()));
+			}
+		}	
 		return dc;
 	}
 	

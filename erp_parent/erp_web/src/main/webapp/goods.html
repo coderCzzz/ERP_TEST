@@ -20,7 +20,9 @@
 	  		    {field:'unit',title:'计量单位',width:100},
 	  		    {field:'inprice',title:'进货价格',width:100},
 	  		    {field:'outprice',title:'销售价格',width:100},
-	  		    {field:'goodstypeuuid',title:'商品类型',width:100},
+	  		    {field:'goodstype',title:'商品类型',width:100,formatter:function(value,row,index){
+	  		    	return value.name;
+	  		    }},
 
 			    {field:'-',title:'操作',width:200,formatter:function(value,row,index)
 			    	{
@@ -37,16 +39,17 @@
 	产地：<input name="t1.origin" >
 	厂家：<input name="t1.producer" >
 	计量单位：<input name="t1.unit" >
-	进货价格：<input name="t1.inprice" >
-	销售价格：<input name="t1.outprice" >
-	商品类型：<input name="t1.goodstypeuuid" >
-
+	进货价格：<input name="t1.inprice" class="easyui-numberbox" data-options="min:0,precision:2">到
+	<input name="t2.inprice" class="easyui-numberbox" data-options="min:0,precision:2">
+	销售价格：<input name="t1.outprice" class="easyui-numberbox" data-options="min:0,precision:2">
+	商品类型：<input name="t1.goodstype.uuid" class="easyui-combobox" data-options="
+		url:'goodstype_list',textField:'name',valueField:'uuid'">
 	<button type="button" id="btnSearch">查询</button>
 </form>
 </div>
 <table id="grid"></table>
 <div id="editWindow" class="easyui-window" title="商品编辑" 
-	style="width: 300px;height: 200px" data-options="closed:true">
+	style="width: 300px;height: 300px" data-options="closed:true">
 	<form id="editForm">
 	<input name="t.uuid" type="hidden"> 
 
@@ -64,13 +67,14 @@
 				<td>计量单位</td><td><input name="t.unit"> </td>
 			</tr>
 			<tr>
-				<td>进货价格</td><td><input name="t.inprice"> </td>
+				<td>进货价格</td><td><input name="t.inprice" class="easyui-numberbox" data-options="min:0,precision:2" prefix="￥"> </td>
 			</tr>
 			<tr>
-				<td>销售价格</td><td><input name="t.outprice"> </td>
+				<td>销售价格</td><td><input name="t.outprice" class="easyui-numberbox" data-options="min:0,precision:2" prefix="￥"> </td>
 			</tr>
 			<tr>
-				<td>商品类型</td><td><input name="t.goodstypeuuid"> </td>
+				<td>商品类型</td><td><input name="t.goodstype.uuid" class="easyui-combobox" data-options="
+		url:'goodstype_list',textField:'name',valueField:'uuid'"> </td>
 			</tr>
 
 		</table>	

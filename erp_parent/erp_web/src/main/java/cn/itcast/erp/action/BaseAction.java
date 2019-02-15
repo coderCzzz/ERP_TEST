@@ -101,7 +101,7 @@ public class BaseAction<T> {
 	public void write(String jsonString){
 
 		HttpServletResponse response = ServletActionContext.getResponse();
-		response.setCharacterEncoding("UTF-8");		
+		response.setContentType("text/html;charset=UTF-8");
 		try {
 			response.getWriter().print(jsonString);
 		} catch (IOException e) {
@@ -190,7 +190,7 @@ public class BaseAction<T> {
 	 */
 	public void get(){
 		T t3 = (T) baseBiz.get(id);
-		String jsonString = JSON.toJSONString(t3);
+		String jsonString = JSON.toJSONStringWithDateFormat(t3, "yyyy-MM-dd");
 		write(mapJson(jsonString, "t"));
 	}
 	
@@ -205,7 +205,15 @@ public class BaseAction<T> {
 		Map<String,Object> map=JSON.parseObject(jsonString);
 		Map<String,Object> newmap=new HashMap<String, Object>();
 		for(String key:map.keySet()){
-			newmap.put(prefix+"."+key, map.get(key));				
+			if(map.get(key) instanceof Map){
+				Map<String,Object> m2=(Map<String,Object>)map.get(key);
+				for(String key2:m2.keySet()){
+					newmap.put(prefix+'.'+key+'.'+key2, m2.get(key2));
+				}
+			}else{
+				newmap.put(prefix+"."+key, map.get(key));				
+			}
+			
 		}
 		return  JSON.toJSONString(newmap);		
 	}

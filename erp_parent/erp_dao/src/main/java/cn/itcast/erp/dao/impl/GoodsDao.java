@@ -38,7 +38,18 @@ public class GoodsDao extends BaseDao<Goods> implements IGoodsDao {
 			{
 				dc.add(Restrictions.like("unit", goods1.getUnit(), MatchMode.ANYWHERE));			
 			}
+			if(goods1.getGoodstype()!=null && goods1.getGoodstype().getName()!=null){
+				dc.add(Restrictions.eq("goodstype", goods1.getGoodstype()));
+			}
+			if(goods1.getInprice()!=null){
+				dc.add(Restrictions.ge("inprice", goods1.getInprice()));
+			}
 		
+		}	
+		if(goods2!=null){
+			if(goods2.getInprice()!=null){
+				dc.add(Restrictions.le("inprice", goods2.getInprice()));
+			}
 		}		
 		return dc;
 	}
