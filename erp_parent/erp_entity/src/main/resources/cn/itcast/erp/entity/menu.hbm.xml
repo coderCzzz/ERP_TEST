@@ -4,13 +4,16 @@
 <hibernate-mapping>
     <class name="cn.itcast.erp.entity.Menu" table="menu" >
         <id name="menuid" >
-        	<generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"><param name="sequence">menu_seq</param></generator>
+        	<!-- <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"><param name="sequence">menu_seq</param></generator> -->
         </id>
 
         <property name="menuname" /> 
         <property name="icon" /> 
         <property name="url" /> 
-        <property name="pid" /> 
- 
+      <!--自关联  -->
+      <bag name="menus" order-by="menuid">
+      	<key column="pid"></key>
+      	<one-to-many class="cn.itcast.erp.entity.Menu"></one-to-many>
+      </bag>
     </class>
 </hibernate-mapping>

@@ -81,7 +81,9 @@
 	<bean id="supplierAction" class="cn.itcast.erp.action.SupplierAction" scope="prototype">
 		<property name="supplierBiz" ref="supplierBiz"></property>
 	</bean>
-
-
+	<!--登录/退出  -->
+	<bean id="loginAction" class="cn.itcast.erp.action.LoginAction" scope="prototype">
+		<property name="empBiz" ref="empBiz"></property>
+	</bean>
 </beans>
 	

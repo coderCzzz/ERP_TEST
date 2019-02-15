@@ -38,6 +38,7 @@
 		<action name="storeoper_*" class="storeoperAction" method="{1}"></action>
     	<!-- 供应商 -->
 		<action name="supplier_*" class="supplierAction" method="{1}"></action>
-
+		<!--登录/退出  -->
+		<action name="login_*" class="loginAction" method="{1}"></action>
     </package>
 </struts>

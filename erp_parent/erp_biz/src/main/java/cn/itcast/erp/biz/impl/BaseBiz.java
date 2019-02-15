@@ -67,5 +67,8 @@ public class BaseBiz<T> {
 	public T get(Long id) {		
 		return (T) baseDao.get(id);
 	}
+	public T get(String id){
+		return (T)baseDao.get(id);
+	}
 	
 }

@@ -6,7 +6,10 @@ import cn.itcast.erp.entity.Emp;
  *
  */
 public interface IEmpBiz extends IBaseBiz<Emp>{
-	
+/**
+ * 根据用户名和密码查询用户信息	
+ */
+Emp findByUsernameAndPwd(String username,String pwd);
 	
 }
 

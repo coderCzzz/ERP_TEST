@@ -16,5 +16,11 @@ public class EmpBiz extends BaseBiz<Emp> implements IEmpBiz {
 		setBaseDao(empDao);
 	}
 
+	@Override
+	public Emp findByUsernameAndPwd(String username, String pwd) {
+		// TODO Auto-generated method stub
+		return empDao.findByUsernameAndPwd(username, pwd);
+	}
+
 	
 }

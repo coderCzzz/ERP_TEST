@@ -59,4 +59,8 @@ public interface IBaseDao<T> {
 	 * @return
 	 */
 	public T get(Long id);
+	/**
+	 * Menu的主键是字符串，不匹配，在此加上Menu的get方法
+	 */
+	public T get(String id);
 }

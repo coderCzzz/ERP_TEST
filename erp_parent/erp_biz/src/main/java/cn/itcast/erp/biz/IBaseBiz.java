@@ -61,6 +61,10 @@ public interface IBaseBiz<T> {
 	 * @return
 	 */
 	public T get(Long id);
-	
+	/**
+	 * Menu
+	 *
+	 */
+	public T get(String id);
 	
 }
