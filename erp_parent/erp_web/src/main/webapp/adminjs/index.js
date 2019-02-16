@@ -64,8 +64,7 @@ $(function(){
 				location.href="login.html";
 			}
 		})
-	})
-	
+	})	
 })
 
 
@@ -315,77 +314,69 @@ function closeTab(action)
     }
 }
 
-
-//弹出信息窗口 title:标题 msgString:提示信息 msgType:信息类型 [error,info,question,warning]
-function msgShow(title, msgString, msgType) {
-	$.messager.alert(title, msgString, msgType);
-}
-
-
-
-
 //设置登录窗口
 function openPwd() {
-    $('#w').window({
+    $('#w').dialog({
         title: '修改密码',
         width: 300,
+        height:300,
         modal: true,
-        shadow: true,
         closed: true,
-        height: 160,
-        resizable:false
+        resizable:false,
+        buttons:[
+          {text:'保存',iconCls:'icon-save',handler:function(){
+        	  var oldPwd=$('#txtOldPass').val();
+        	    var newPwd = $('#txtNewPass').val();
+        	    var rePwd = $('#txtRePass').val();
+        	    if (oldPwd == '') {
+        	    	$.messager.alert('提示信息','请输入旧密码','info');
+        	        return;
+        	    }
+        	    if (newPwd == '') {
+        	    	$.messager.alert('提示信息','请输入新密码','info');
+        	        return;
+        	    }
+        	    if (rePwd == '') {
+        	    	$.messager.alert('提示信息','请再次输入新密码','info');
+            	        return;
+            	    }       
+        	    if (newPwd != rePwd) {
+        	    	$.messager.alert('提示信息','确认密码不一致','info');
+        	        return ;
+        	    }
+        	  $.ajax({
+        		  url:'emp_updatePwd',
+        		  dataType:'json',
+        		  type:'post',
+        		  data:{"oldPwd":oldPwd,"newPwd":newPwd},
+        		  success:function(rtn){
+        			  $.messager.alert('提示',rtn.message,'info',function(){
+        				  if(rtn.success){
+        					  $('#w').dialog('close');
+        					  $('#txtOldPass').val('');
+        					  $('#txtNewPass').val('');
+        					  $('#txtRePass').val('');
+        					
+        				  }
+        			  });
+        		  }
+        	  }) ; 
+          }},
+          {text:'取消',iconCls:'icon-cancel',handler:function(){
+        	  $('#w').dialog('close');
+          }}
+          ]
     });
 }
 //关闭登录窗口
 function closePwd() {
-    $('#w').window('close');
+    $('#w').dialog('close');
 }
-
-
-
-//修改密码
-function serverLogin() {
-    var $newpass = $('#txtNewPass');
-    var $rePass = $('#txtRePass');
-
-    if ($newpass.val() == '') {
-        msgShow('系统提示', '请输入密码！', 'warning');
-        return false;
-    }
-    if ($rePass.val() == '') {
-        msgShow('系统提示', '请在一次输入密码！', 'warning');
-        return false;
-    }
-
-    if ($newpass.val() != $rePass.val()) {
-        msgShow('系统提示', '两次密码不一至！请重新输入', 'warning');
-        return false;
-    }
-
-    $.post('/ajax/editpassword.ashx?newpass=' + $newpass.val(), function(msg) {
-        msgShow('系统提示', '恭喜，密码修改成功！<br>您的新密码为：' + msg, 'info');
-        $newpass.val('');
-        $rePass.val('');
-        close();
-    })
-    
-}
-
 $(function() {
-
     openPwd();
-
     $('#editpass').click(function() {
-        $('#w').window('open');
-    });
-
-    $('#btnEp').click(function() {
-        serverLogin();
-    })
-
-	$('#btnCancel').click(function(){closePwd();})
-
-   
+        $('#w').dialog('open');
+    });   
 });
 
 

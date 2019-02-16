@@ -11,8 +11,10 @@ import org.apache.struts2.ServletActionContext;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.opensymphony.xwork2.ActionContext;
 
 import cn.itcast.erp.biz.IBaseBiz;
+import cn.itcast.erp.entity.Emp;
 
 /**
  * 基本Action
@@ -217,6 +219,8 @@ public class BaseAction<T> {
 		}
 		return  JSON.toJSONString(newmap);		
 	}
-	
+	public Emp getLoginUser(){
+		return (Emp) ActionContext.getContext().getSession().get("loginUser");
+	}
 	
 }

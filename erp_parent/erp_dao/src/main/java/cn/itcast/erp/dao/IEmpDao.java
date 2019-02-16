@@ -11,5 +11,5 @@ public interface IEmpDao extends IBaseDao<Emp>{
  * 根据用户名和密码查询用户信息	
  */
 Emp findByUsernameAndPwd(String username,String pwd);
-	
+void updatePwd(Long uuid,String newPwd);
 }

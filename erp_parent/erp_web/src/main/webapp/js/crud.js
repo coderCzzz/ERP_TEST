@@ -1,7 +1,18 @@
-
-var method="";//保存提交的方法名称 
+//保存提交的方法名称 
+var method="";
+//查询条件
+var listParam="";
+//保存附带条件
+var saveParam="";
 $(function(){
-	
+	if(Request['type']==1){
+		listParam='?t1.type=1';
+		saveParam='?t.type=1';
+	}
+	if(Request['type']==2){
+		listParam='?t1.type=2';
+		saveParam='?t.type=2';
+	}
 	//表格数据初始化
 	$('#grid').datagrid({
 		url:name+'_listByPage.action',
@@ -34,7 +45,7 @@ $(function(){
 		}
 		var formdata= $('#editForm').serializeJSON();	
 		$.ajax({
-			url:name+'_'+method+'.action',
+			url:name+'_'+method+saveParam,
 			data:formdata,
 			dataType:'json',
 			type:'post',

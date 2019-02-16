@@ -27,7 +27,7 @@ public class MenuAction extends BaseAction<Menu> {
 	public void getMenuTree(){
 		//查询顶级菜单
 		Menu menu = menuBiz.get("0");
-		//转化未json字符串
+		//转化未为son字符串
 		String menuString = JSON.toJSONString(menu, true);
 		write(menuString);
 	}

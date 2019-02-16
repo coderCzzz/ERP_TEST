@@ -67,7 +67,7 @@ public class EmpDao extends BaseDao<Emp> implements IEmpDao {
 		return dc;
 	}
 	/**
-	 * 根据用户名和面民查询登录用户信息
+	 * 根据用户名和密码查询登录用户信息
 	 */
 	@Override
 	public Emp findByUsernameAndPwd(String username, String pwd) {
@@ -77,7 +77,11 @@ public class EmpDao extends BaseDao<Emp> implements IEmpDao {
 		}
 		return null;
 	}
-	
-	
+	@Override
+	public void updatePwd(Long uuid, String newPwd) {
+		// TODO Auto-generated method stub
+		String hql="update Emp set pwd=? where uuid=?";
+		this.getHibernateTemplate().bulkUpdate(hql,newPwd,uuid);
+	}	
 }
 
