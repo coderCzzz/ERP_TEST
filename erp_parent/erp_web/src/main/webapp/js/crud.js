@@ -5,17 +5,9 @@ var listParam="";
 //保存附带条件
 var saveParam="";
 $(function(){
-	if(Request['type']==1){
-		listParam='?t1.type=1';
-		saveParam='?t.type=1';
-	}
-	if(Request['type']==2){
-		listParam='?t1.type=2';
-		saveParam='?t.type=2';
-	}
 	//表格数据初始化
 	$('#grid').datagrid({
-		url:name+'_listByPage.action',
+		url:name+'_listByPage'+listParam,
 		columns:columns,
 		singleSelect:true,
 		pagination:true,

@@ -45,7 +45,7 @@ $(function(){
         }
         var datas = $('#formPwdReset').serializeJSON();
         $.ajax({
-            url: 'emp_updatePwd_reset',
+            url: 'emp_upatePwd_reset',
             dataType:'json',
             data: datas,
             type: 'post',

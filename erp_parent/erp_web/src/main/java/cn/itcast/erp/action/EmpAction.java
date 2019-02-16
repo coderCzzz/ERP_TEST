@@ -51,7 +51,7 @@ public class EmpAction extends BaseAction<Emp> {
 		}
 		write(rtn);
 	}
-	public void upatePwd_reset(){
+	public void updatePwd_reset(){
 		String rtn=null;
 		try {
 			this.empBiz.updatePwd_reset(getId(), newPwd);

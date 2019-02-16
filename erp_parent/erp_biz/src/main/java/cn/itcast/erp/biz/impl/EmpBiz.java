@@ -68,8 +68,9 @@ public class EmpBiz extends BaseBiz<Emp> implements IEmpBiz {
 	@Override
 	public void updatePwd_reset(Long uuid, String newPwd) {
 		// TODO Auto-generated method stub
-		Emp emp = this.empDao.get(uuid);
-		emp.setPwd(encrypt(newPwd, emp.getUsername()));
+		Emp emp = empDao.get(uuid);
+		String encryptNewPwd = encrypt(newPwd, emp.getUsername());
+		empDao.updatePwd(uuid, encryptNewPwd);
 	}
 	
 }

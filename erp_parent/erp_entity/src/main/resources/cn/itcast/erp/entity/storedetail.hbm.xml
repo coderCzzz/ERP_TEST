@@ -4,7 +4,8 @@
 <hibernate-mapping>
     <class name="cn.itcast.erp.entity.Storedetail" table="storedetail" >
         <id name="uuid" >
-        	<generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"><param name="sequence">storedetail_seq</param></generator>
+        	<column name="uuid"></column>
+        	<generator class="increment"></generator>
         </id>
 
         <property name="storeuuid" /> 
