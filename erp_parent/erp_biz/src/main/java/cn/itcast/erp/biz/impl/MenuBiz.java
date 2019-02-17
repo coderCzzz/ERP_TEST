@@ -13,7 +13,7 @@ public class MenuBiz extends BaseBiz<Menu> implements IMenuBiz {
 	
 	public void setMenuDao(IMenuDao menuDao) {
 		this.menuDao = menuDao;
-		setBaseDao(menuDao);
+		super.setBaseDao(this.menuDao);
 	}
 
 	

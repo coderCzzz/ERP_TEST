@@ -4,8 +4,7 @@
 <hibernate-mapping>
     <class name="cn.itcast.erp.entity.Orders" table="orders" >
         <id name="uuid" >
-        	<column name="uuid"></column>
-        	<generator class="increment"></generator>
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"> <param name="sequence_name">orders_seq</param> </generator>
         </id>
 
         <property name="createtime" /> 
@@ -21,6 +20,12 @@
         <property name="totalmoney" /> 
         <property name="state" /> 
         <property name="waybillsn" /> 
+        
+        <!-- 级联更新  -->
+        <bag name="orderDetails" cascade="save-update" inverse="true">
+        	<key column="ordersuuid"></key>
+        	<one-to-many class="cn.itcast.erp.entity.Orderdetail"/>
+        </bag>
  
     </class>
 </hibernate-mapping>

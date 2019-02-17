@@ -8,17 +8,7 @@ var _menus={
 		"icon":"icon-sys",
 		"menuid":"0",
 		"menuname":"系统菜单",
-		"menus":
-			[
-			 	{
-			 		"icon":"icon-sys","menuid":"100","menuname":"一级菜单","menus":
-					[
-						{"icon":"icon-sys","menuid":"101","menuname":"二级菜单","url":""}	,
-						{"icon":"icon-sys","menuid":"102","menuname":"二级菜单","url":""}						
-					]
-			 	}
-			 	
-			 ]
+		"menus":''
 		};
 
 /**

@@ -4,8 +4,7 @@
 <hibernate-mapping>
     <class name="cn.itcast.erp.entity.Goods" table="goods" >
         <id name="uuid" >
-        	<column name="uuid"></column>
-        	<generator class="increment"></generator>
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"> <param name="sequence_name">goods_seq</param> </generator>
         </id>
 
         <property name="name" /> 
@@ -14,6 +13,7 @@
         <property name="unit" /> 
         <property name="inprice" /> 
         <property name="outprice" /> 
-        <many-to-one name="goodstype" class="cn.itcast.erp.entity.Goodstype" column="goodstypeuuid"></many-to-one>
+       <many-to-one name="goodstype" class="cn.itcast.erp.entity.Goodstype" column="goodstypeuuid"></many-to-one>
+ 
     </class>
 </hibernate-mapping>

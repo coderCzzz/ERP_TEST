@@ -28,19 +28,7 @@ public class MenuAction extends BaseAction<Menu> {
 		//查询顶级菜单
 		Menu menu = menuBiz.get("0");
 		//转化未为son字符串
-		String menuString = JSON.toJSONString(menu, true);
+		String menuString = JSON.toJSONString(menu);
 		write(menuString);
-	}
-	public void write(String jsonString){
-		HttpServletResponse response = ServletActionContext.getResponse();
-		response.setContentType("text/html;charset=utf-8");
-		try {
-			response.getWriter().write(jsonString);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	
+	}	
 }

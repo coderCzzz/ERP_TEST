@@ -4,17 +4,19 @@
 <hibernate-mapping>
     <class name="cn.itcast.erp.entity.Emp" table="emp" >
         <id name="uuid" >
-        	<column name="uuid"></column>
-        	<generator class="increment"></generator>
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"> <param name="sequence_name">emp_seq</param> </generator>
         </id>
+
         <property name="username" /> 
-        <property name="pwd" update="false"/> 
+        <property name="pwd" update="false" /> 
         <property name="name" /> 
         <property name="gender" /> 
         <property name="email" /> 
         <property name="tele" /> 
         <property name="address" /> 
         <property name="birthday" /> 
-        <many-to-one name="dep" class="cn.itcast.erp.entity.Dep" column="depuuid"></many-to-one>
+        
+ 		<many-to-one name="dep" class="cn.itcast.erp.entity.Dep" column="depuuid"></many-to-one>
+ 
     </class>
 </hibernate-mapping>

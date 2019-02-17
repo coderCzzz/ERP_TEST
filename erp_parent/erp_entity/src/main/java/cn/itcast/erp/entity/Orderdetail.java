@@ -1,4 +1,7 @@
 package cn.itcast.erp.entity;
+
+import com.alibaba.fastjson.annotation.JSONField;
+
 /**
  * 订单明细实体类
  * @author Administrator *
@@ -14,7 +17,12 @@ public class Orderdetail {
 	private Long ender;//库管员
 	private Long storeuuid;//仓库编号
 	private String state;//采购：0=未入库，1=已入库  销售：0=未出库，1=已出库
-	private Long ordersuuid;//订单编号
+	@JSONField(serialize=false)
+	private Orders orders;
+	//未入库
+	public static final String STATE_NOT_IN="0";
+	//已入库
+	public static final String STATE_IN="1";
 
 	public Long getUuid() {		
 		return uuid;
@@ -76,11 +84,12 @@ public class Orderdetail {
 	public void setState(String state) {
 		this.state = state;
 	}
-	public Long getOrdersuuid() {		
-		return ordersuuid;
+	public Orders getOrders() {
+		return orders;
 	}
-	public void setOrdersuuid(Long ordersuuid) {
-		this.ordersuuid = ordersuuid;
+	public void setOrders(Orders orders) {
+		this.orders = orders;
 	}
+	
 
 }

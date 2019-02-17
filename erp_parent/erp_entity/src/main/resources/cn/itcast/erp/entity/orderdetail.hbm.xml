@@ -4,8 +4,7 @@
 <hibernate-mapping>
     <class name="cn.itcast.erp.entity.Orderdetail" table="orderdetail" >
         <id name="uuid" >
-        	<column name="uuid"></column>
-        	<generator class="increment"></generator>
+            <generator class="org.hibernate.id.enhanced.SequenceStyleGenerator"> <param name="sequence_name">orderdetail_seq</param> </generator>
         </id>
 
         <property name="goodsuuid" /> 
@@ -17,7 +16,8 @@
         <property name="ender" /> 
         <property name="storeuuid" /> 
         <property name="state" /> 
-        <property name="ordersuuid" /> 
+        
+        <many-to-one name="orders" column="ordersuuid" class="cn.itcast.erp.entity.Orders"></many-to-one>
  
     </class>
 </hibernate-mapping>
