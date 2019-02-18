@@ -105,7 +105,7 @@ public class BaseAction<T> {
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setContentType("text/html;charset=UTF-8");
 		try {
-			response.getWriter().print(jsonString);
+			response.getWriter().write(jsonString);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

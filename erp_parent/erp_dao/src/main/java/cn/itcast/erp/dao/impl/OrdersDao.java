@@ -1,4 +1,8 @@
 package cn.itcast.erp.dao.impl;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
@@ -24,17 +28,15 @@ public class OrdersDao extends BaseDao<Orders> implements IOrdersDao {
 		if(orders1!=null){
 			if(orders1.getType()!=null &&  orders1.getType().trim().length()>0)
 			{
-				dc.add(Restrictions.like("type", orders1.getType(), MatchMode.ANYWHERE));			
+				dc.add(Restrictions.eq("type", orders1.getType()));			
 			}
 			if(orders1.getState()!=null &&  orders1.getState().trim().length()>0)
 			{
-				dc.add(Restrictions.like("state", orders1.getState(), MatchMode.ANYWHERE));			
+				dc.add(Restrictions.eq("state", orders1.getState()));			
 			}
 		
 		}		
 		return dc;
-	}
-	
-	
+	}		
 }
 

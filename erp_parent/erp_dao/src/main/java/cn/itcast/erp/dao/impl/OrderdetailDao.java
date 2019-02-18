@@ -30,6 +30,9 @@ public class OrderdetailDao extends BaseDao<Orderdetail> implements IOrderdetail
 			{
 				dc.add(Restrictions.like("state", orderdetail1.getState(), MatchMode.ANYWHERE));			
 			}
+			if(orderdetail1.getOrders()!=null&&orderdetail1.getOrders().getUuid()!=null){
+				dc.add(Restrictions.eq("orders", orderdetail1.getOrders()));
+			}
 		
 		}		
 		return dc;

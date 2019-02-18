@@ -1,4 +1,5 @@
 package cn.itcast.erp.biz;
+import cn.itcast.erp.dao.IStoredetailDao;
 import cn.itcast.erp.entity.Orderdetail;
 /**
  * 订单明细业务逻辑层接口
@@ -6,7 +7,6 @@ import cn.itcast.erp.entity.Orderdetail;
  *
  */
 public interface IOrderdetailBiz extends IBaseBiz<Orderdetail>{
-	
-	
+	void doInStore(Long uuid,Long storeUuid,Long empUuid);
 }
 

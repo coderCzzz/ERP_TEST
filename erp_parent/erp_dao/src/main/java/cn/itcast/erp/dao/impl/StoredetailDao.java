@@ -22,8 +22,16 @@ public class StoredetailDao extends BaseDao<Storedetail> implements IStoredetail
 	public DetachedCriteria getDetachedCriteria(Storedetail storedetail1,Storedetail storedetail2,Object param){
 		DetachedCriteria dc=DetachedCriteria.forClass(Storedetail.class);
 		if(storedetail1!=null){
-		
+			//根据商品查询
+			if(storedetail1!=null){
+				dc.add(Restrictions.eq("goodsuuid", storedetail1.getGoodsuuid()));
+			}
+			//根据仓库查询
+			if(storedetail2!=null){
+				dc.add(Restrictions.eq("storeuuid", storedetail1.getStoreuuid()));
+			}
 		}		
+	
 		return dc;
 	}
 	

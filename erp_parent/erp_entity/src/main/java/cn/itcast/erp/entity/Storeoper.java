@@ -11,6 +11,8 @@ public class Storeoper {
 	private Long goodsuuid;//商品编号
 	private Long num;//数量
 	private String type;//1：入库 2：出库
+	public static final String TYPE_IN="1";
+	public static final String TYPE_OUT="2";
 
 	public Long getUuid() {		
 		return uuid;

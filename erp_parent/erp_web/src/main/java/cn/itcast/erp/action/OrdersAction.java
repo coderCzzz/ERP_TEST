@@ -1,4 +1,4 @@
-package cn.itcast.erp.action;
+   package cn.itcast.erp.action;
 import java.util.List;
 
 import com.alibaba.fastjson.JSON;
@@ -7,6 +7,7 @@ import cn.itcast.erp.biz.IOrdersBiz;
 import cn.itcast.erp.entity.Emp;
 import cn.itcast.erp.entity.Orderdetail;
 import cn.itcast.erp.entity.Orders;
+import cn.itcast.erp.exception.ErpException;
 
 /**
  * 订单Action 
@@ -34,7 +35,7 @@ public class OrdersAction extends BaseAction<Orders> {
 	public void add() {
 		Emp loginUser = getLoginUser();
 		if(null==loginUser){
-			ajaxReturn(false, "请登录");
+		write(ajaxReturn(false, "请登录"));
 		}
 		try {
 			Orders orders = getT();//获取提交的订单
@@ -46,11 +47,53 @@ public class OrdersAction extends BaseAction<Orders> {
 			orders.setOrderDetails(orderDetailList);
 			//保存订单
 			ordersBiz.add(orders);
-			ajaxReturn(true, "添加订单成功");
+			write(ajaxReturn(true, "添加订单成功"));
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-			ajaxReturn(true, "添加订单失败");
+			write(ajaxReturn(true, "添加订单失败"));;
+		}
+	}
+	/**
+	 * 采购订单审核
+	 */
+	public void doCheck(){
+		Emp loginUser = getLoginUser();
+		if(null==loginUser){
+			write(ajaxReturn(false, "请登录"));;
+			return;
+		}
+		try {
+			ordersBiz.doCheck(getId(), loginUser.getUuid());
+			write(ajaxReturn(true, "审核成功"));;
+		} catch (ErpException e) {
+			// TODO: handle exception
+			write(ajaxReturn(false, e.getMessage()));;
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			write(ajaxReturn(false, e.getMessage()));;
+		}
+	}
+	/**
+	 * 采购订单确认
+	 */
+	public void doStart(){
+		Emp loginUser = getLoginUser();
+		if(null==loginUser){
+			write(ajaxReturn(false, "请登录"));
+			return;
+		}
+		try {
+			ordersBiz.doStart(getId(), loginUser.getUuid());
+			write(ajaxReturn(true, "确认成功"));;
+		} catch (ErpException e) {
+			// TODO: handle exception
+			write(ajaxReturn(false, e.getMessage()));;
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			write(ajaxReturn(false,"确认失败"));;
 		}
 	}
 	
