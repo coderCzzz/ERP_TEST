@@ -126,9 +126,65 @@ salt的概念，还有散列次数参数
 - 订单表要判断明细是否全部入库，全部入库了要更新订单的状态，修改库管员、入库时间
 - 库存表要检查是否存在库存信息，存在就数量增加，不存在就新增记录
 - 库存变更明细插入记录
-   
-
-   
+### day08 
+#### 1.json和js对象
+- json可以理解为是一种格式要求严格的js对象，看如下代码
+```
+var obj={}//这是js对象
+var obj1={width:100,height:200}//这也是js对象
+var obj2={"width":100,"height":200,"name":role}//这是json格式的js对象，也就是json，键值对格式
+var obj3='{"width":100,"height":200,"name":role}'//外面加了引号，所以是json字符串
+``` 
+- 区别
+1. JSON:
+1.仅仅是一种数据格式
+2.可以跨平台数据传输 
+==3.键值对方式，键必须加双引号==
+==值不能是方法函数，不能是undefined==
+==4.JSON转js对象==  
+JSON.parse()
+2. JS
+1.不能传输
+2.键值对方式，键不加引号
+3.值可以是函数，对象，字符串等
+4.js对象转Json
+JSON.stringify():其实是转化为json字符串
+#### 2.前端的一些转化json的方法的区别
+1.JSON.parse() 用来把json字符串转化为json格式的js对象（也叫json对象）
+- json字符串：符合json格式要求，外边加双引号，比如
+- 首先啥是json，就是键值对，键必须加双引号；啥是js对象，就是键值对，键不加双引号
+```
+var obj1="{"name":role,"width"：100}"//这里是json，外边加双引号，就是json字符串
+var obj2={"name":role,"width"：100}//这货是json
+var obj3={name:role,width：100}//这货是js对象，因为和json的格式比较像，所以叫json格式的js对象
+所以
+obj3=JSON.parse(obj1)//把json字符串转化为json格式的js对象（json对象）
+```
+2.JSON.serializeJSON()
+把表单的数据,转化为json对象，和上面的方法类似
+3.JSON.stringify把JS对象转化为json字符串
+#### 3.后端一些转化JSON数据的方法（以fastjson）
+ 1. 首先要明确的一点是ajax传送的数据是json对象
+ 比如struts2使用属性驱动（原理暂时我还不知道）得到相应的的值，最后需要将这些值进行转化
+ 2.JSON.toJSONString
+ 把java对象转化为json字符串，传回前端
+ 3.JSON.parseArray
+ 把json字符串转化为List对象
+#### 3.按类型销售统计和年份统计
+1. 主要是sql的使用：聚合函数和分组查询、投影查询：
+a.查询语句编写，可以从简单到复杂
+b.简单的多表查询，然后再加条件查询，再加分组和聚合函数
+2. hql语句编写注意事项：
+a.from后跟的是类名（开头大写）
+b.如果两个实体进行了一对多的关联，多的一方.一的一方的属性=一的一方的别名
+c.如果使用+拼接，注意每个字符串后面加空格
+3. 投影查询
+把查询出来的结果生成类的实例
+#### 4.饼图和折线图
+1. java开源的是JFreeChart
+2. js有个开源的HighCharts
+3. 怎么画？
+从后端查询出数据，自己去看HighCharts的文档，在前端怎么写，把数据放好就OK了
 
    
 
