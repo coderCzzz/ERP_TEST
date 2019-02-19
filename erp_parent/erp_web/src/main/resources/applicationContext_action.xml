@@ -85,5 +85,9 @@
 	<bean id="loginAction" class="cn.itcast.erp.action.LoginAction" scope="prototype">
 		<property name="empBiz" ref="empBiz"></property>
 	</bean>
+	<!--报表统计  -->
+	<bean id="reportAction" class="cn.itcast.erp.action.ReportAction">
+		<property name="reportBiz" ref="reportBiz"></property>
+	</bean>
 </beans>
 	
