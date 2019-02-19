@@ -96,5 +96,16 @@ public class OrdersAction extends BaseAction<Orders> {
 			write(ajaxReturn(false,"确认失败"));;
 		}
 	}
+	/**
+	 * 我的订单
+	 */
+	public void myListByPage(){
+		if(null==getT1()){
+			setT1(new Orders());
+		}
+		Emp loginUser = getLoginUser();
+		getT1().setCreater(loginUser.getUuid());
+		super.listByPage();
+	}
 	
 }

@@ -44,15 +44,15 @@ public class OrdersBiz extends BaseBiz<Orders> implements IOrdersBiz {
 
 	@Override
 	public void add(Orders orders) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub 
 		orders.setState(Orders.STATE_CREATE);//未审核
-		orders.setType(Orders.TYPE_IN);//采购
+		//orders.setType(Orders.TYPE_IN);//采购
 		orders.setCreatetime(new Date());
 		//计算总金额
 		double total=0;
 		for(Orderdetail detail:orders.getOrderDetails()){
 			total+=detail.getMoney();//累计金额
-			detail.setState(Orderdetail.STATE_NOT_IN);//设置未未入库
+			detail.setState(Orderdetail.STATE_NOT_IN);//设置未入库
 			detail.setOrders(orders);//设置明细对应的订单，
 		}
 		orders.setTotalmoney(total);//设置总金额
@@ -67,41 +67,14 @@ public class OrdersBiz extends BaseBiz<Orders> implements IOrdersBiz {
 		//缓存供应商名称
 		Map<Long,String> supplierNameMap=new HashMap<Long,String>();
 		for(Orders o:ordersList){
-			o.setCreaterName(getEmpName(o.getCreater(), empNameMap));
-			o.setCheckName(getEmpName(o.getChecker(), empNameMap));
-			o.setStarterName(getEmpName(o.getStarter(), empNameMap));
-			o.setEnderName(getEmpName(o.getEnder(), empNameMap));
-			o.setSupplierName(getSupplierName(o.getSupplieruuid(), supplierNameMap));
+			o.setCreaterName(getEmpName(o.getCreater(), empNameMap,empDao));
+			o.setCheckName(getEmpName(o.getChecker(), empNameMap,empDao));
+			o.setStarterName(getEmpName(o.getStarter(), empNameMap,empDao));
+			o.setEnderName(getEmpName(o.getEnder(), empNameMap,empDao));
+			o.setSupplierName(getSupplierName(o.getSupplieruuid(), supplierNameMap,supplierDao));
 		}
-		return super.getListByPage(t1, t2, param, firstResult, maxResults);
+		return ordersList;
 	}
-	/**
-	 * 获取员工
-	 */
-	private String getEmpName(Long uuid,Map<Long,String> empNameMap){
-		if(null==uuid){
-			return null;
-		}
-		String empName=empNameMap.get(uuid);
-		if(null==empName){
-			//如果没有在缓存中找到，则调用dao查询
-			empName=empDao.get(uuid).getName();
-			empNameMap.put(uuid, empName);
-		}
-		return empName;
-	}
-	private String getSupplierName(Long uuid,Map<Long,String> supplierNameMap){
-		if(null==uuid){
-			return null;
-		}
-		String supplierName = supplierNameMap.get(uuid);
-		if(null==supplierName){
-			supplierName=supplierDao.get(uuid).getName();
-			supplierNameMap.put(uuid, supplierName);
-		}
-		return supplierName;
-	}
-
 	/**
 	 * 采购订单审核
 	 */

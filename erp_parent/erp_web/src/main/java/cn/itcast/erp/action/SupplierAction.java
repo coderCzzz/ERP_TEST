@@ -15,6 +15,21 @@ public class SupplierAction extends BaseAction<Supplier> {
 		this.supplierBiz = supplierBiz;
 		super.setBaseBiz(this.supplierBiz);
 	}
+	private String q;
+
+	public void setQ(String q) {
+		this.q = q;
+	}
+
+	@Override
+	public void list() {
+		if(null==getT1()){
+			setT1(new Supplier());
+		}
+		getT1().setName(q);
+		super.list();
+	}
+	
 	
 	
 }

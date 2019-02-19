@@ -41,6 +41,10 @@ public class Orders {
 	public static final String TYPE_IN="1";
 	//销售订单
 	public static final String TYPE_OUT="2";
+	//未出库
+	public static final String STATE_IN="0";
+	//已出库
+	public static final String STATE_OUT="1";
 
 	public Long getUuid() {		
 		return uuid;

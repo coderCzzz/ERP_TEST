@@ -43,6 +43,24 @@ public class OrderdetailAction extends BaseAction<Orderdetail> {
 			write(ajaxReturn(false, "入库失败！"));;
 		}
 	}
+	//出库
+	public void doOutStore(){
+		Emp loginUser = getLoginUser();
+		if(null==loginUser){
+			write(ajaxReturn(false, "请您登录"));
+			return;
+		}
+		try {
+			orderdetailBiz.doOutStore(getId(), storeuuid, loginUser.getUuid());
+			write(ajaxReturn(true, "出库成功"));
+		} catch (ErpException e) {
+			// TODO: handle exception
+			write(ajaxReturn(false, e.getMessage()));;
+		}catch(Exception e){
+			e.printStackTrace();
+			write(ajaxReturn(false, "出库失败！"));;
+		}
+	}
 	
 	
 }
