@@ -1,4 +1,4 @@
-package cn.itcast.erp.dao.impl;
+ package cn.itcast.erp.dao.impl;
 
 import java.util.ArrayList;
 import java.util.Date;
