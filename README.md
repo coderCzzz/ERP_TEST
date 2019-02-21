@@ -185,6 +185,78 @@ c.如果使用+拼接，注意每个字符串后面加空格
 2. js有个开源的HighCharts
 3. 怎么画？
 从后端查询出数据，自己去看HighCharts的文档，在前端怎么写，把数据放好就OK了
+### day09 javaMail实现库存预警
+#### 1.库存预警报表
+1. 统计每种商品的库存数量和发货数量，如果库存数量小于待发货数量则要进行库存预警
+- 涉及到的表：
+商品名称--orders,orderdetail、
+库存数量--storeDetail
+待发货数量：orderdetail type=2
+子查询
+2. sql语句
+考虑写子查询，分成两张表：表一关联查询出商品名称和库存数量，表二关联查询出商品名称和代发货数量
+- 表一查询
+```
+sql1=select g.uuid,sum(sd.num) storenum from Goods g,Storedetail  where g.uuid=sd.goodsuuid group by g.uuid,g.name 
+```
+此时只能查询有库存的商品，无法查询出库存中不存在的商品：此时选择使用==左外连接，nvl（）方法把不存在把null转成0
+`sql1=select g.uuid,g.name,nvl(sum(s.num),0) storenum from goods g,storedetail s where g.uuid=s.goodsuuid(+) group by g.uuid,g.name `
+- 表二查询
+`sql2=select od.goodsuuid,sum(od.num) outnum from orderdetail od,orders o where od.ordersuuid=o.uuid and o.type='2' and od.state='0' group by od.goodsuuid`
+- 将两个查询组合起来
+` SQL=select a.uuid,a.name,a.storenum,b.outnum from(sql1) a,(sql2) b where a.uuid=b.goodsuuid`
+3. 上边的语句查询结果是我们经常要用的，每次写都很繁琐，因此我们可以把它建立为视图
+`create view view_storealter as SQL`
+#### 2.JavaMail
+1. 使用spring的javamailsender
+用的时候查一下文档就行了
+#### 3.Quartz 
+1. 干啥用的：有一些任务，需要时间点触发。这个框架就是干这个的
+2. 怎么用？
+核心：
+- job:任务，就是你要干啥
+- jobDetail：这个是用来执行job的程序，包括了具体怎么执行这个job，就是所谓的调度方法和策略
+- Trigger：一个类，描述job执行的时间触发规则，一个job可以对应多个trigger，但一个trigger只能对应一个job
+- scheduler：调度容器：就是说里面可以放多个jobDetail和Trigger。就是用来管理他俩的，将一个Trigger绑定到jobDetail上
+- Note：作业，
+3. 具体使用
+- job ：自己写具体要干啥
+- jobDetail 由Quartz生成，属性`targetObject`指定job对象，`targetMethod`指定执行的方法
+- Trigger，Quartz生成，属性`jobDetail`关联`jobDeatil`，另一个属性`cronExpression`指定触发时机--七子表达式
+- scheduler任务调度管理容器，由Quartz生成，属性`List<> triggers`可以关联多个`Trigger`
+4. 七子表达式cron
+- 七个域：秒 分 时 日|月 月 日|星期 年
+- 字符含义：
+==*== 匹配该域任意值，比如如果分使用，就是每分钟都会触发
+==？== 不确定值，只用在DayofMonth和DayofWeek
+-表示范围
+==/== 表示 5/20假如用在分，就是5分钟的时候开始触发，每20分钟触发一次
+,枚举值 5，20在分，就是5和20分各触发一次
+L：表示最后，只能出现在DayofMonth和DayofWeek
+W：表示最近有效工作日，只出现在DayofMonth
+LW:连用，表示某个月的最后一个工作日
+==#==用于确定每个月第几个星期几
+#### 总结
+1. 子查询
+首先所有的查询的结果都是一张表，但是可能这张表在数据库中不是实际存在的
+我们从这张结果表再查出我们想要的数据，这就是子查询
+2. 内连接、左（外）连接、右外连接
+- 定义：什么是内连接、左外....
+针对多表查询的一个概念。如果两个表有关系，我们要查询出这两个表中的一些数据，就要使用这个连接多表查询。
+顾名思义，内连接就是把两张表连接起来查询，左、右连接也类似
+- 使用
+==内连接的语法==：`select * from table1 t1,table2 t2 where t1.id=t2.forid`
+也可以这样写（不用where 关键字）`select * from table t1 inner join on t1.id=t2.forid`:==使用inner join关键字，用on来进行条件查询==
+==左外连接==：`select * from table1 t1 left join table t2 on t1.id=t2.forid`：
+或者`select * from table1 t1,table2 t2 where t1.id=t2.forid(+)`:==+在哪里，谁就是参考表==：参考表是啥？看下面的区别
+==右外连接==：类似
+- 区别
+内连接查出满足条件的所有结果
+左外连接：列出左表所有满足条件的列，右表中的列如果不存在或为null，也补上，右表就是参考表
+3. nvl（）函数
+nvl(t1,t2):t1的值存在就返回t1，否则返回t2
+4. 视图
+就是把一个查询语句的结果，也就是表存储起来，可以看成是数据库的虚表
 
    
 
