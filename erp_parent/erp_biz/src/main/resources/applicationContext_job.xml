@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        ">
+        <!--定义一个任务类  -->
+        <bean id="job" class="cn.itcast.erp.job.MailJob"></bean>
+        <!--定义jobDetail  -->
+        <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        	<property name="targetObject" ref="job"></property>
+        	<property name="targetMethod" ref="sendStorealertMail"></property>
+        </bean>
+        <!--定义Trigger  -->
+        <bean id="mailTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> 
+        	<property name="jobDetail" ref="jobDetail"></property>
+        	<property name="cronExpression" value="0 20 12,16 * * ?"></property>
+        </bean>
+        <!--定义scheduler  -->
+        <bean id="scheduler" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        	<property name="triggers">
+        		<list>
+        			<ref bean="mailTrigger"></ref>
+        		</list>
+        	</property>
+        </bean>
+</beans>
