@@ -13,7 +13,7 @@
         <!--定义jobDetail  -->
         <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
         	<property name="targetObject" ref="job"></property>
-        	<property name="targetMethod" ref="sendStorealertMail"></property>
+        	<property name="targetMethod" value="sendStorealertMail"></property>
         </bean>
         <!--定义Trigger  -->
         <bean id="mailTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"> 

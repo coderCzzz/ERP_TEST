@@ -22,6 +22,10 @@ $(function(){
 		url+="?t1.type=1";
 		document.title="采购订单查询";
 	}
+	if(Request['oper']=='orders'){
+		url+="?t1.type=2";
+		document.title="销售订单查询";
+	}
 	if(Request['oper']=='doCheck'){
 		url+="?t1.type=1&t1.state=0";
 		document.title="采购订单审核";
@@ -94,27 +98,32 @@ $(function(){
 			}]
 		});
 	}
+	var toobar=new Array();
 	//添加审核按钮
+	toobar.push({
+		text:'导出',
+		iconCls:'icon-excel',
+		handler:doExport
+	});
 	if(Request['oper'] == 'doCheck'){
-		$('#ordersDlg').dialog({
-			toolbar:[{
-				text:'审核',
-				iconCls:'icon-search',
-				handler:doCheck
-			}]
+		toobar.push({
+			text:'审核',
+			iconCls:'icon-search',
+			handler:doCheck
 		});
 	}
 	
 	//添加确认按钮
 	if(Request['oper'] == 'doStart'){
-		$('#ordersDlg').dialog({
-			toolbar:[{
-				text:'确认',
-				iconCls:'icon-search',
-				handler:doStart
-			}]
+		toobar.push({
+			text:'确认',
+			iconCls:'icon-search',
+			handler:doStart
 		});
 	}
+	$('#ordersDlg').dialog({
+		toolbar:toobar
+	});
 	//添加入库双击事件
 	if(Request['oper'] == 'doInStore'||Request['oper'] == 'doOutStore'){
 		$('#itemgrid').datagrid({
@@ -338,4 +347,7 @@ function getColumns(){
 		  		    {field:'waybillsn',title:'运单号',width:100}
 				]];
 	}
+}
+function doExport(){
+	$.download("orders_export",{"id":$('#uuid').html()});
 }

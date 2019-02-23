@@ -1,6 +1,10 @@
    package cn.itcast.erp.action;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.struts2.ServletActionContext;
+
 import com.alibaba.fastjson.JSON;
 
 import cn.itcast.erp.biz.IOrdersBiz;
@@ -106,6 +110,19 @@ public class OrdersAction extends BaseAction<Orders> {
 		Emp loginUser = getLoginUser();
 		getT1().setCreater(loginUser.getUuid());
 		super.listByPage();
+	}
+	/**
+	 * 导出
+	 */
+	public void export(){
+		String filename="_orders"+getId()+".xls";;
+		HttpServletResponse response = ServletActionContext.getResponse();
+		try {
+			response.setHeader("Content-Disposition", "attachment;filename="+new String(filename.getBytes(),"ISO-8859-1"));
+			ordersBiz.exportById(response.getOutputStream(), getId());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 	}
 	
 }
