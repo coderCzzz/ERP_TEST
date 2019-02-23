@@ -257,8 +257,76 @@ LW:连用，表示某个月的最后一个工作日
 nvl(t1,t2):t1的值存在就返回t1，否则返回t2
 4. 视图
 就是把一个查询语句的结果，也就是表存储起来，可以看成是数据库的虚表
+### day10--数据的导入导出
+#### 1.数据的导入
+1. POI
+- 主要使用POI这个框架
+2. 导出excel文件
+- 后端
+```
+//1.创建excel工作簿
+HSSHWorkbook wk=new HSSHWorkbook();
+//2.创建excel工作表
+HSSFSheet sheet=null;
+//3.创建行
+HSSFRow row=sheet.createRow(i);//表示第几行
+//4.创建行的单元格
+cell=row.createCell(i);
+//5.给单元格设置值
+cell.setCellValue(headerNames[i]);
+//6.文件写入
+wk.write(os);
+```
+- 前端显示出导出--设置http的表头
+```
+response.setHeader("Content-Disposition", "attachment;filename=" +new String(filename.getBytes(),"ISO-8859-1"));//中文名称进行转码
+```
+==Content-Disposition==表示导出文件
+==attachment;filename==设置导出时的文件名
+- 前端使用jquery的download插件
+#### 2.数据的导入
+1. 后端实现
+- action层需要三个参数
+```
+file 文件
+fileName 文件名
+fileContentType 文件类型`application/vnd.ms-excel`
+```
+- 对表格的操作
+`hssfworkbook(FileInputStream(file)`将文件读进去操作)
+2. 前端实现
+```
+<form enctype="multipart/form-data">
+  <input type="file" name="file">
+</form>
+```
+- 再用ajax将form里的数据传回后端
+```
+$.ajax({
+			    			url: name + '_doImport',
+			    			data:new FormData($('#importForm')[0]),
+			    			type:'post',
+			    			processData:false,
+			    			contentType:false,
+			    			dataType:'json',
+			    			success:function(rtn){
+			    				$.messager.alert('提示',rtn.message,'info',function(){
+			    					if(rtn.success){
+			    						$('#importDlg').dialog('close');
+			    						$('#importForm').form('clear');
+			    						$('#grid').datagrid('reload');
+			    					}
+			    				});
+			    			}
+			    		});
+```
+注意这里的一些参数
+==processData==:要求为Boolean类型的参数，默认为true。默认情况下，发送的数据将被转换为对象（从技术角度来讲关非字符串）以配合默认内容类型”application/x-www-form-urlencoded”。如果要发送DOM树信息或者其它不希望转换的信息，请设置为false。
+==contentType==：要求为String类型的参数，当发送信息至服务器时，内容编码类型默认为”application/x-www-form-urlencoded”。该默认值适合大多数应用场合 
+==data:new FormData($('#importForm')[0]),==
 
-   
+FormData是js的一个对象，
+`$('#importForm')`是一颗DOM树  
 
 
 
