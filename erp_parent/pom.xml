@@ -188,6 +188,17 @@
 	        <artifactId>poi</artifactId>
 	        <version>3.15</version>
 	    </dependency>
+	    <!--CXF  -->
+	    <dependency> 
+			<groupId>org.apache.cxf</groupId> 
+			<artifactId>cxf-rt-frontend-jaxws</artifactId> 
+			<version>3.0.1</version> 
+		</dependency> 
+		<dependency> 
+			<groupId>org.apache.cxf</groupId> 
+			<artifactId>cxf-rt-transports-http</artifactId> 
+			<version>3.0.1</version> 
+		</dependency>  
 	</dependencies>
   
     <build>  
@@ -214,12 +225,11 @@
 	  	  </plugin>
 	  </plugins>  
     </build>
-  
-	
     <modules>
     	<module>erp_entity</module>
     	<module>erp_dao</module>
     	<module>erp_biz</module>
     	<module>erp_web</module>
+    	<module>erp_client</module>
     </modules>
 </project>

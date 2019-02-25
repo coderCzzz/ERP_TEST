@@ -27,6 +27,8 @@ import cn.itcast.erp.dao.ISupplierDao;
 import cn.itcast.erp.entity.Orderdetail;
 import cn.itcast.erp.entity.Orders;
 import cn.itcast.erp.exception.ErpException;
+import cn.itcast.redsun.ws.Waybilldetail;
+import cn.itcast.redsun.ws.impl.IWaybillWs;
 /**
  * 订单业务逻辑类
  * @author Administrator
@@ -37,6 +39,12 @@ public class OrdersBiz extends BaseBiz<Orders> implements IOrdersBiz {
 	private IOrdersDao ordersDao;
 	private IEmpDao empDao;
 	private ISupplierDao supplierDao;
+	private IWaybillWs waybillWs;
+	
+	public void setWaybillWs(IWaybillWs waybillWs) {
+		this.waybillWs = waybillWs;
+	}
+
 	public IEmpDao getEmpDao() {
 		return empDao;
 	}
@@ -297,6 +305,12 @@ public class OrdersBiz extends BaseBiz<Orders> implements IOrdersBiz {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public List<Waybilldetail> waybilldetailList(Long sn) {
+		
+		return waybillWs.waybilldetailList(sn);
 	}
 
 

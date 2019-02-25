@@ -3,14 +3,18 @@ import java.util.Calendar;
 import java.util.List;
 
 import cn.itcast.erp.biz.IOrderdetailBiz;
+import cn.itcast.erp.biz.ISupplierBiz;
 import cn.itcast.erp.dao.IOrderdetailDao;
 import cn.itcast.erp.dao.IStoredetailDao;
 import cn.itcast.erp.dao.IStoreoperDao;
+import cn.itcast.erp.dao.ISupplierDao;
 import cn.itcast.erp.entity.Orderdetail;
 import cn.itcast.erp.entity.Orders;
 import cn.itcast.erp.entity.Storedetail;
 import cn.itcast.erp.entity.Storeoper;
+import cn.itcast.erp.entity.Supplier;
 import cn.itcast.erp.exception.ErpException;
+import cn.itcast.redsun.ws.impl.IWaybillWs;
 /**
  * 订单明细业务逻辑类
  * @author Administrator
@@ -23,6 +27,15 @@ public class OrderdetailBiz extends BaseBiz<Orderdetail> implements IOrderdetail
 	 * 商品库存dao
 	 * @param orderdetailDao
 	 */
+	private IWaybillWs waybillWs;
+	private ISupplierDao supplierDao;
+	public void setSupplierDao(ISupplierDao supplierDao) {
+		this.supplierDao = supplierDao;
+	}
+
+	public void setWaybillWs(IWaybillWs waybillWs) {
+		this.waybillWs = waybillWs;
+	}
 	private IStoredetailDao storedetailDao;
 	/**
 	 * 商品库存变更记录
@@ -171,7 +184,10 @@ public class OrderdetailBiz extends BaseBiz<Orderdetail> implements IOrderdetail
 		if(count==0){//说明明细全部入库，这时需要更新订单的状态，入库完成时间，入库操作员
 			orders.setState(Orders.STATE_END);
 			orders.setEnder(empUuid) ;
-			orders.setEndtime(orderdetail.getEndtime());	
+			orders.setEndtime(orderdetail.getEndtime());
+			Supplier supplier = supplierDao.get(orders.getSupplieruuid());
+			waybillWs.addWaybill(4l, supplier.getAddress(), supplier.getContact(), supplier.getTele(), "--");
+			 
 		}
 	}
 }

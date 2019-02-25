@@ -12,6 +12,8 @@ import cn.itcast.erp.entity.Emp;
 import cn.itcast.erp.entity.Orderdetail;
 import cn.itcast.erp.entity.Orders;
 import cn.itcast.erp.exception.ErpException;
+import cn.itcast.redsun.ws.Waybilldetail;
+import cn.itcast.redsun.ws.impl.IWaybillWs;
 
 /**
  * 订单Action 
@@ -34,6 +36,16 @@ public class OrdersAction extends BaseAction<Orders> {
 	}
 	public void setJson(String json) {
 		this.json = json;
+	}
+	private IWaybillWs waybillWs;
+	//运单
+	private Long waybillSn;
+	
+	public void setWaybillSn(Long waybillSn) {
+		this.waybillSn = waybillSn;
+	}
+	public void setWaybillWs(IWaybillWs waybillWs) {
+		this.waybillWs = waybillWs;
 	}
 	@Override
 	public void add() {
@@ -123,6 +135,10 @@ public class OrdersAction extends BaseAction<Orders> {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+	}
+	public void waybilldetailList(){
+		List<Waybilldetail> waybilldetailList = ordersBiz.waybilldetailList(waybillSn);
+		write(JSON.toJSONString(waybilldetailList));
 	}
 	
 }

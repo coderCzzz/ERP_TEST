@@ -56,6 +56,7 @@ $(function(){
 					//alert(JSON.stringify(rowData));
 					//显示详情
 					$('#uuid').html(rowData.uuid);
+					$('#waybillsn').html(rowData.waybillsn);
 					$('#suppliername').html(rowData.supplierName);
 					$('#state').html(getState(rowData.state));
 					$('#creater').html(rowData.createrName);
@@ -66,6 +67,30 @@ $(function(){
 					$('#checktime').html(formatDate(rowData.checktime));
 					$('#starttime').html(formatDate(rowData.starttime));
 					$('#endtime').html(formatDate(rowData.endtime));
+					if(rowData.state*1==1){
+						//添加详情按钮
+						var options=$('#ordersDlg').dialog('options');
+						var toolbar=options.toolbar;
+						toolbar.push({
+							text:'订单详情',
+							iconCls:'icon-search',
+							handler:function(){
+								$('#waybillDlg').dialog('open');
+								$('#waybillgrid').datagrid({
+									url:'orders_waybilldetailList?waybillSn='+$('#waybillsn').html(),
+									columns:[[
+									   {field:'exedate',title:'执行日期',width:100},
+									   {field:'exetime',title:'执行时间',width:100},
+									   {field:'info',title:'执行信息',width:100}
+									]],
+									rownumbers:true
+								});
+							}
+						});
+					}
+					$('#ordersDlg').dialog({
+						toolbar:toolbar
+					})
 					//打开窗口
 					$('#ordersDlg').dialog('open');
 					//加载明细列表
